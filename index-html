@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>0.01 - Beyond Time DNA検査キット</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{font-family:'Orbitron','Hiragino Sans',sans-serif;background:#000;color:#fff;min-height:100vh;overflow-x:hidden}
+
+body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 50% 50%,#0e0e1a 0%,#000 100%);z-index:-2}
+
+.stars{position:fixed;width:100%;height:100%;z-index:-1;pointer-events:none}
+
+.star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;animation:twinkle 3s ease-in-out infinite}
+
+@keyframes twinkle{0%,100%{opacity:0}50%{opacity:1}}
+
+.container{max-width:1200px;margin:0 auto;padding:40px 20px}
+
+section{display:none;min-height:100vh;padding:60px 20px;animation:fadeIn .5s}
+
+section.active{display:flex;flex-direction:column;align-items:center;justify-content:center}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+.entrance{text-align:center}
+
+.main-title{font-size:clamp(4rem,15vw,8rem);font-weight:900;color:#00d4ff;margin-bottom:20px;letter-spacing:.05em;animation:glow 3s ease-in-out infinite}
+
+@keyframes glow{0%,100%{text-shadow:0 0 40px rgba(0,212,255,.8),0 0 80px rgba(0,212,255,.5)}50%{text-shadow:0 0 60px rgba(0,212,255,1),0 0 120px rgba(0,212,255,.8)}}
+
+.tagline{font-size:clamp(1rem,3vw,1.4rem);color:rgba(255,255,255,.8);margin-bottom:60px;line-height:1.8}
+
+.drills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px;margin:60px 0;width:100%;max-width:1000px}
+
+.drill-card{background:linear-gradient(135deg,rgba(138,43,226,.2),rgba(255,0,255,.15));padding:40px 30px;border-radius:20px;border:2px solid rgba(138,43,226,.5);cursor:pointer;transition:all .3s;text-align:center}
+
+.drill-card:hover{transform:translateY(-5px);border-color:#ff00ff;box-shadow:0 10px 40px rgba(255,0,255,.5)}
+
+.drill-icon{font-size:4rem;margin-bottom:20px}
+
+.drill-price{font-size:2.5rem;color:#ffd700;font-weight:900;margin-bottom:15px}
+
+.drill-title{font-size:1.5rem;color:#00d4ff;font-weight:700;margin-bottom:15px}
+
+.drill-desc{font-size:1rem;line-height:1.7;color:rgba(255,255,255,.7)}
+
+.secret-section{margin-top:80px;padding:30px 40px;background:rgba(0,0,0,.3);border-radius:20px;border:1px solid rgba(138,43,226,.2);max-width:400px;width:100%}
+
+.password-box{display:flex;gap:15px;align-items:center;justify-content:center}
+
+.password-box input{flex:1;padding:15px;background:rgba(0,0,0,.8);border:2px solid rgba(138,43,226,.3);border-radius:10px;color:#fff;font-size:1.1rem;text-align:center;font-family:'Orbitron',sans-serif}
+
+.password-box input:focus{outline:none;border-color:#ff00ff;box-shadow:0 0 20px rgba(255,0,255,.4)}
+
+.btn-unlock{padding:15px 25px;background:linear-gradient(135deg,#ff00ff,#8a2be2);border:none;border-radius:10px;color:#fff;font-weight:900;cursor:pointer;transition:all .3s;font-family:'Orbitron',sans-serif;font-size:1.2rem}
+
+.btn-unlock:hover{transform:translateY(-2px);box-shadow:0 5px 20px rgba(255,0,255,.6)}
+
+.drill-content{max-width:900px;width:100%;background:rgba(0,0,0,.9);padding:50px 40px;border-radius:30px;border:2px solid rgba(138,43,226,.5)}
+
+.drill-header{text-align:center;margin-bottom:50px}
+
+.drill-header h2{font-size:clamp(2rem,6vw,3rem);color:#00d4ff;margin-bottom:15px}
+
+.drill-header p{font-size:clamp(1rem,3vw,1.3rem);color:rgba(255,255,255,.8)}
+
+.progress{background:rgba(138,43,226,.2);padding:20px;border-radius:15px;margin:20px 0}
+
+.progress-text{text-align:center;color:#8a2be2;font-weight:bold;margin-bottom:10px}
+
+.progress-bar{background:rgba(138,43,226,.3);height:10px;border-radius:10px;overflow:hidden}
+
+.progress-fill{background:linear-gradient(90deg,#8a2be2,#00d4ff);height:100%;width:0;transition:width .3s;border-radius:10px}
+
+.question{background:rgba(0,0,0,.95);padding:30px;border-radius:15px;margin:20px 0;border:2px solid rgba(138,43,226,.5)}
+
+.question-title{font-size:1.3rem;margin-bottom:20px;color:#00d4ff;font-weight:700}
+
+.options{display:flex;flex-direction:column;gap:12px}
+
+.option{background:rgba(138,43,226,.2);border:2px solid rgba(138,43,226,.4);padding:18px;border-radius:12px;cursor:pointer;transition:all .3s;color:#fff;font-size:1rem}
+
+.option:hover{background:rgba(138,43,226,.4);transform:translateX(5px)}
+
+.option.selected{background:rgba(0,212,255,.3);border-color:#00d4ff;box-shadow:0 0 20px rgba(0,212,255,.5)}
+
+.input-group{margin:20px 0}
+
+.input-label{display:block;margin-bottom:10px;color:#00d4ff;font-size:1.1rem;font-weight:700}
+
+.input-field{width:100%;padding:15px;background:rgba(0,0,0,.5);border:2px solid rgba(138,43,226,.5);border-radius:10px;color:#fff;font-size:1.1rem;font-family:'Orbitron',sans-serif}
+
+.input-field:focus{outline:none;border-color:#00d4ff;box-shadow:0 0 20px rgba(0,212,255,.5)}
+
+.btn-primary{padding:20px 50px;background:linear-gradient(135deg,#00d4ff,#8a2be2);border:none;border-radius:15px;color:#000;font-weight:900;cursor:pointer;font-size:1.3rem;transition:all .3s;font-family:'Orbitron',sans-serif;width:100%;max-width:400px;margin:30px auto;display:block}
+
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 10px 40px rgba(138,43,226,.7)}
+
+.btn-primary:disabled{opacity:.5;cursor:not-allowed}
+
+.result-box{background:rgba(0,0,0,.95);padding:40px;border-radius:20px;margin:30px 0;border:3px solid rgba(0,255,0,.5);text-align:center}
+
+.result-title{font-size:2rem;color:#00ff00;margin-bottom:20px;font-weight:900}
+
+.result-text{font-size:1.1rem;line-height:1.8;color:rgba(255,255,255,.9);text-align:left}
+
+.dna-box{background:linear-gradient(135deg,rgba(0,212,255,.1),rgba(138,43,226,.1));padding:30px;border-radius:15px;margin:20px 0;border:2px solid rgba(0,212,255,.3)}
+
+.dna-title{font-size:1.5rem;color:#00d4ff;margin-bottom:20px;font-weight:900;text-align:center}
+
+.gene-row{display:flex;justify-content:space-between;align-items:center;padding:15px 0;border-bottom:1px solid rgba(255,255,255,.1)}
+
+.gene-label{font-size:1.1rem;color:rgba(255,255,255,.8)}
+
+.gene-value{font-size:1.3rem;color:#ffd700;font-weight:900}
+
+.animal-result{background:rgba(0,0,0,.8);padding:25px;border-radius:12px;margin:15px 0;border:2px solid rgba(138,43,226,.4)}
+
+.animal-icon{font-size:3rem;text-align:center;margin-bottom:10px}
+
+.animal-name{font-size:1.3rem;color:#00d4ff;text-align:center;margin-bottom:10px;font-weight:700}
+
+.animal-desc{font-size:.95rem;color:rgba(255,255,255,.7);line-height:1.6;text-align:center}
+
+.code-box{background:#000;padding:25px;border-radius:10px;font-family:monospace;font-size:.9rem;color:#00ff00;line-height:1.8;white-space:pre-wrap;margin:20px 0;border:2px solid rgba(0,255,0,.3);text-align:left;max-height:400px;overflow-y:auto;cursor:pointer}
+
+.code-box:hover{box-shadow:0 0 20px rgba(0,255,0,.5)}
+
+.btn-copy{background:linear-gradient(135deg,#00ff00,#00d4ff);color:#000;padding:15px 30px;border:none;border-radius:10px;font-weight:900;cursor:pointer;width:100%;margin-top:10px}
+
+.back-btn{display:inline-block;margin-top:40px;padding:15px 30px;background:rgba(138,43,226,.3);border:2px solid rgba(138,43,226,.5);border-radius:10px;color:#fff;text-decoration:none;font-size:1rem;transition:all .3s}
+
+.back-btn:hover{background:rgba(138,43,226,.5);transform:translateX(-5px)}
+
+.footer{margin-top:60px;padding-top:30px;border-top:1px solid rgba(255,255,255,.1);text-align:center;color:rgba(255,255,255,.4);font-size:.9rem}
+
+@media(max-width:768px){.drills-grid{grid-template-columns:1fr}.drill-content{padding:30px 20px}}
+</style>
+</head>
+<body>
+<div class="stars" id="stars"></div>
+
+<div class="container">
+
+<section id="entrance" class="entrance active">
+  <div class="main-title">0.01</div>
+  <div class="tagline">
+    あなたの行動遺伝子を解析<br>
+    Beyond Time DNA検査キット
+  </div>
+  
+  <div class="drills-grid">
+    <div class="drill-card" onclick="selectDrill(100)">
+      <div class="drill-icon">🧬</div>
+      <div class="drill-price">¥100</div>
+      <div class="drill-title">基本DNA検査</div>
+      <div class="drill-desc">3問で簡易分析<br>哺乳類型？両生類型？</div>
+    </div>
+    
+    <div class="drill-card" onclick="selectDrill(980)">
+      <div class="drill-icon">🔬</div>
+      <div class="drill-price">¥980</div>
+      <div class="drill-title">座標DNA検査</div>
+      <div class="drill-desc">誕生日+10問<br>時空座標+基本遺伝子型</div>
+    </div>
+    
+    <div class="drill-card" onclick="selectDrill(2980)">
+      <div class="drill-icon">🧫</div>
+      <div class="drill-price">¥2,980</div>
+      <div class="drill-title">プレミアムDNA検査</div>
+      <div class="drill-desc">15問で詳細分析<br>哺乳類・両生類比率測定</div>
+    </div>
+    
+    <div class="drill-card" onclick="selectDrill(29800)">
+      <div class="drill-icon">⚡</div>
+      <div class="drill-price">¥29,800</div>
+      <div class="drill-title">完全DNA検査</div>
+      <div class="drill-desc">50問で完全解析<br>似ている動物を特定</div>
+    </div>
+  </div>
+  
+  <div class="secret-section">
+    <div class="password-box">
+      <input type="text" id="secretCode" placeholder="">
+      <button class="btn-unlock" onclick="unlockAll()">→</button>
+    </div>
+  </div>
+  
+  <div class="footer">
+    0.01 - Beyond Time DNA検査キット<br>
+    Created by 荒井健吾
+  </div>
+</section>
+
+<section id="drill-100">
+  <div class="drill-content">
+    <div class="drill-header">
+      <h2>🧬 基本DNA検査</h2>
+      <p>3問であなたの基本遺伝子型を分析</p>
+    </div>
+    
+    <div id="questions-100"></div>
+    
+    <button class="btn-primary" id="btn-100" style="display:none" onclick="showResult100()">遺伝子解析</button>
+    
+    <div id="result-100" style="display:none">
+      <div class="result-box">
+        <div class="result-title">🧬 解析完了</div>
+        <div class="result-text" id="analysis-100"></div>
+        <div class="code-box" id="code-100"></div>
+        <button class="btn-copy" onclick="copyCode('code-100')">📋 コピー</button>
+      </div>
+    </div>
+    
+    <a href="#" class="back-btn" onclick="backToEntrance()">← エントランスに戻る</a>
+  </div>
+</section>
+
+<section id="drill-980">
+  <div class="drill-content">
+    <div class="drill-header">
+      <h2>🔬 座標DNA検査</h2>
+      <p>誕生日+10問で時空座標と基本遺伝子型を特定</p>
+    </div>
+    
+    <div class="input-group">
+      <label class="input-label">生年月日を入力</label>
+      <input type="date" class="input-field" id="birthday-980">
+    </div>
+    
+    <div id="questions-980"></div>
+    
+    <button class="btn-primary" id="btn-980" style="display:none" onclick="showResult980()">遺伝子解析</button>
+    
+    <div id="result-980" style="display:none">
+      <div class="result-box">
+        <div class="result-title">🔬 解析完了</div>
+        <div class="result-text" id="analysis-980"></div>
+        <div class="code-box" id="code-980"></div>
+        <button class="btn-copy" onclick="copyCode('code-980')">📋 コピー</button>
+      </div>
+    </div>
+    
+    <a href="#" class="back-btn" onclick="backToEntrance()">← エントランスに戻る</a>
+  </div>
+</section>
+
+<section id="drill-2980">
+  <div class="drill-content">
+    <div class="drill-header">
+      <h2>🧫 プレミアムDNA検査</h2>
+      <p>15問で哺乳類・両生類の比率を測定</p>
+    </div>
+    
+    <div class="progress">
+      <div class="progress-text" id="progress-2980">質問 0/15</div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill-2980"></div>
+      </div>
+    </div>
+    
+    <div id="questions-2980"></div>
+    
+    <button class="btn-primary" id="btn-2980" style="display:none" onclick="showResult2980()">🧫 遺伝子解析 🧫</button>
+    
+    <div id="result-2980" style="display:none">
+      <div class="result-box">
+        <div class="result-title">🧫 DNA解析完了</div>
+        <div id="dna-2980"></div>
+        <div class="code-box" id="code-2980"></div>
+        <button class="btn-copy" onclick="copyCode('code-2980')">📋 コピー</button>
+      </div>
+    </div>
+    
+    <a href="#" class="back-btn" onclick="backToEntrance()">← エントランスに戻る</a>
+  </div>
+</section>
+
+<section id="drill-29800">
+  <div class="drill-content">
+    <div class="drill-header">
+      <h2>⚡ 完全DNA検査</h2>
+      <p>50問で完全解析 - あなたに似ている動物を特定</p>
+    </div>
+    
+    <div class="progress">
+      <div class="progress-text" id="progress-29800">質問 0/50</div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill-29800"></div>
+      </div>
+    </div>
+    
+    <div id="questions-29800"></div>
+    
+    <button class="btn-primary" id="btn-29800" style="display:none" onclick="showResult29800()">⚡ 完全DNA解析 ⚡</button>
+    
+    <div id="result-29800" style="display:none">
+      <div class="result-box">
+        <div class="result-title">⚡ 完全DNA解析完了</div>
+        <div id="dna-29800"></div>
+        <div class="code-box" id="code-29800"></div>
+        <button class="btn-copy" onclick="copyCode('code-29800')">📋 コピー</button>
+      </div>
+    </div>
+    
+    <a href="#" class="back-btn" onclick="backToEntrance()">← エントランスに戻る</a>
+  </div>
+</section>
+
+</div>
+
+<script>
+let unlockedDrills=new Set();
+
+const ans100={};
+
+const ans980={};
+
+const ans2980={};
+
+const ans29800={};
+
+function createStars(){
+const s=document.getElementById('stars');
+
+for(let i=0;i<200;i++){
+const star=document.createElement('div');
+
+star.className='star';
+
+star.style.left=Math.random()*100+'%';
+
+star.style.top=Math.random()*100+'%';
+
+star.style.animationDelay=Math.random()*3+'s';
+
+s.appendChild(star);
+
+}
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+createStars();
+
+const params=new URLSearchParams(window.location.search);
+
+if(params.get('paid')==='true'){
+unlockedDrills.add(parseInt(params.get('plan')));
+
+}
+});
+
+function selectDrill(price){
+if(!unlockedDrills.has(price)&&!unlockedDrills.has(0)){
+window.location.href='/payment.html?plan='+price;
+
+return;
+
+}
+document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+
+document.getElementById('drill-'+price).classList.add('active');
+
+if(price===100)init100();
+
+if(price===980)init980();
+
+if(price===2980)init2980();
+
+if(price===29800)init29800();
+
+window.scrollTo({top:0,behavior:'smooth'});
+
+}
+
+function backToEntrance(){
+document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+
+document.getElementById('entrance').classList.add('active');
+
+window.scrollTo({top:0,behavior:'smooth'});
+
+return false;
+
+}
+
+function unlockAll(){
+const code=document.getElementById('secretCode').value;
+
+if(code==='0.01'){
+unlockedDrills.add(0);
+
+alert('🎉 全DNA検査解放！\n\n¥100、¥980、¥2,980、¥29,800\n全ての検査が使えます！');
+
+}
+}
+
+function copyCode(id){
+const text=document.getElementById(id).textContent;
+
+navigator.clipboard.writeText(text).then(()=>{
+alert('📋 コピーしました！\n\nAIに貼り付けて、さらに深い分析を受けてください。');
+
+});
+
+}
+
+function init100(){
+const qs=[
+{q:'困難な状況でどう反応しますか？',opts:['計画を立てる','適応する','流れに任せる']},
+
+{q:'エネルギーの使い方は？',opts:['常に全力','必要な時だけ','最小限']},
+
+{q:'変化への態度は？',opts:['慎重','柔軟','歓迎']}
+];
+
+const c=document.getElementById('questions-100');
+
+c.innerHTML='';
+
+qs.forEach((q,i)=>{
+const d=document.createElement('div');
+
+d.className='question';
+
+d.innerHTML='<div class="question-title">Q'+(i+1)+'. '+q.q+'</div><div class="options">'+q.opts.map((o,j)=>'<div class="option" onclick="select100('+i+','+j+',this)">'+o+'</div>').join('')+'</div>';
+
+c.appendChild(d);
+
+});
+
+}
+
+function select100(qi,val,el){
+el.parentElement.querySelectorAll('.option').forEach(o=>o.classList.remove('selected'));
+
+el.classList.add('selected');
+
+ans100[qi]=val;
+
+if(Object.keys(ans100).length===3){
+document.getElementById('btn-100').style.display='block';
+
+}
+}
+
+function showResult100(){
+const score=Object.values(ans100).reduce((a,b)=>a+b,0);
+
+const mammal=Math.floor(100-(score/6*100));
+
+const amphibian=100-mammal;
+
+const code='DNA-BASIC-'+Math.floor(Math.random()*9000+1000);
+
+let type='';
+
+if(mammal>70){type='🦍 哺乳類型（固定・維持）';}
+else if(amphibian>70){type='🐸 両生類型（適応・解放）';}
+else{type='⚖️ ハイブリッド型（両方使える）';}
+document.getElementById('analysis-100').innerHTML='<div class="dna-box"><div class="dna-title">🧬 基本遺伝子型</div><div class="gene-row"><div class="gene-label">🦍 哺乳類型</div><div class="gene-value">'+mammal+'%</div></div><div class="gene-row"><div class="gene-label">🐸 両生類型</div><div class="gene-value">'+amphibian+'%</div></div><div class="gene-row"><div class="gene-label">判定</div><div class="gene-value">'+type+'</div></div></div>';
+
+document.getElementById('code-100').textContent='基本DNA検査結果\n\n遺伝子コード: '+code+'\n\n🦍 哺乳類型: '+mammal+'%\n🐸 両生類型: '+amphibian+'%\n\n判定: '+type+'\n\nこのコードをAIに貼り付けると、\nさらに深い分析が得られます。\n\nBeyond Time DNA検査キット';
+
+document.getElementById('questions-100').style.display='none';
+
+document.getElementById('btn-100').style.display='none';
+
+document.getElementById('result-100').style.display='block';
+
+}
+
+function init980(){
+const qs=[
+{q:'朝起きた時の感覚は？',opts:['疲れている','普通','エネルギッシュ']},
+
+{q:'計画通りに進まない時は？',opts:['ストレス','対応','気にしない']},
+
+{q:'ルーティンの重要性は？',opts:['必須','ある程度','不要']},
+
+{q:'新しいことへの挑戦は？',opts:['慎重','バランス','即決']},
+
+{q:'過去への執着は？',opts:['強い','普通','ない']},
+
+{q:'未来への不安は？',opts:['強い','普通','ない']},
+
+{q:'「今」への意識は？',opts:['低い','普通','高い']},
+
+{q:'エネルギー管理は？',opts:['常時使用','計画的','最小限']},
+
+{q:'待つことへの耐性は？',opts:['低い','普通','高い']},
+
+{q:'変化への適応力は？',opts:['低い','普通','高い']}
+];
+
+const c=document.getElementById('questions-980');
+
+c.innerHTML='';
+
+qs.forEach((q,i)=>{
+const d=document.createElement('div');
+
+d.className='question';
+
+d.innerHTML='<div class="question-title">Q'+(i+1)+'. '+q.q+'</div><div class="options">'+q.opts.map((o,j)=>'<div class="option" onclick="select980('+i+','+j+',this)">'+o+'</div>').join('')+'</div>';
+
+c.appendChild(d);
+
+});
+
+}
+
+function select980(qi,val,el){
+el.parentElement.querySelectorAll('.option').forEach(o=>o.classList.remove('selected'));
+
+el.classList.add('selected');
+
+ans980[qi]=val;
+
+const bd=document.getElementById('birthday-980').value;
+
+if(Object.keys(ans980).length===10&&bd){
+document.getElementById('btn-980').style.display='block';
+
+}
+}
+
+function showResult980(){
+const birthday=document.getElementById('birthday-980').value;
+
+if(!birthday){alert('⚠️ 生年月日を入力してください');return;}
+const date=new Date(birthday);
+
+const score=Object.values(ans980).reduce((a,b)=>a+b,0);
+
+const mammal=Math.floor(100-(score/20*100));
+
+const amphibian=100-mammal;
+
+const x=(date.getFullYear()%360);
+
+const y=(date.getMonth()*30+date.getDate())%180;
+
+const z=((date.getFullYear()+date.getMonth()+date.getDate()+score)%100);
+
+const code='DNA-COORD-'+x+'-'+y+'-'+z;
+
+document.getElementById('analysis-980').innerHTML='<div class="dna-box"><div class="dna-title">🧬 遺伝子型 + 時空座標</div><div class="gene-row"><div class="gene-label">🦍 哺乳類型</div><div class="gene-value">'+mammal+'%</div></div><div class="gene-row"><div class="gene-label">🐸 両生類型</div><div class="gene-value">'+amphibian+'%</div></div><div class="gene-row"><div class="gene-label">時空座標</div><div class="gene-value">('+x+', '+y+', '+z+')</div></div></div><p style="margin-top:20px;line-height:1.8">過去'+Math.floor((new Date()-date)/(1000*60*60*24))+'日間の選択が、この遺伝子型と座標を作り出しました。</p>';
+
+document.getElementById('code-980').textContent='座標DNA検査結果\n\n遺伝子コード: '+code+'\n\n🦍 哺乳類型: '+mammal+'%\n🐸 両生類型: '+amphibian+'%\n時空座標: ('+x+', '+y+', '+z+')\n\nBeyond Time DNA検査キット';
+
+document.getElementById('questions-980').style.display='none';
+
+document.getElementById('btn-980').style.display='none';
+
+document.getElementById('result-980').style.display='block';
+
+}
+
+function init2980(){
+const qs=[
+{q:'過去の記憶は？',opts:['宝物','参考資料','幻想']},
+
+{q:'未来への感情は？',opts:['期待','中立','無関心']},
+
+{q:'今この瞬間への意識は？',opts:['低い','普通','高い']},
+
+{q:'他人との比較は？',opts:['頻繁','時々','しない']},
+
+{q:'時間の感覚は？',opts:['速い','普通','ゆっくり']},
+
+{q:'人生で大切なことは？',opts:['達成','バランス','存在']},
+
+{q:'失敗の捉え方は？',opts:['避ける','学び','同じ']},
+
+{q:'直感と論理は？',opts:['論理','両方','直感']},
+
+{q:'孤独への態度は？',opts:['苦手','必要','好き']},
+
+{q:'意味を求める？',opts:['常に','時々','しない']},
+
+{q:'変化への反応は？',opts:['抵抗','適応','歓迎']},
+
+{q:'死への恐怖は？',opts:['強い','普通','ない']},
+
+{q:'自己の価値は？',opts:['達成','存在','無']},
+
+{q:'美しい瞬間は？',opts:['達成','愛','静寂']},
+
+{q:'あなたは何者？',opts:['役割','人間','無']}
+];
+
+const c=document.getElementById('questions-2980');
+
+c.innerHTML='';
+
+qs.forEach((q,i)=>{
+con
