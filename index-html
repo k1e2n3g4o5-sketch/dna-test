@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>0.01 - DNA検査キット</title>
+<title>0.01 - Beyond Time DNA検査キット</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:sans-serif;background:#000;color:#fff;min-height:100vh}
 .container{max-width:1200px;margin:0 auto;padding:40px 20px}
-.title{font-size:clamp(3rem,10vw,6rem);color:#00d4ff;text-align:center;margin-bottom:20px;font-weight:900}
-.tagline{text-align:center;font-size:1.2rem;color:#aaa;margin-bottom:60px}
+.title{font-size:clamp(3rem,10vw,6rem);color:#00d4ff;text-align:center;margin-bottom:20px;font-weight:900;text-shadow:0 0 40px rgba(0,212,255,.8)}
+.tagline{text-align:center;font-size:1.2rem;color:#aaa;margin-bottom:60px;line-height:1.8}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:30px;max-width:1000px;margin:0 auto}
 .card{background:linear-gradient(135deg,rgba(138,43,226,.2),rgba(255,0,255,.15));padding:40px;border-radius:20px;border:2px solid rgba(138,43,226,.5);cursor:pointer;text-align:center;transition:all .3s}
 .card:hover{transform:translateY(-5px);border-color:#ff00ff;box-shadow:0 10px 40px rgba(255,0,255,.5)}
@@ -19,15 +19,21 @@ body{font-family:sans-serif;background:#000;color:#fff;min-height:100vh}
 .desc{font-size:1rem;color:#aaa;line-height:1.6}
 .secret{margin-top:80px;text-align:center;max-width:400px;margin-left:auto;margin-right:auto}
 .secret input{width:200px;padding:15px;background:rgba(0,0,0,.8);border:2px solid rgba(138,43,226,.3);border-radius:10px;color:#fff;font-size:1.1rem;text-align:center;margin-right:10px}
-.secret button{padding:15px 25px;background:linear-gradient(135deg,#ff00ff,#8a2be2);border:none;border-radius:10px;color:#fff;font-weight:900;cursor:pointer;font-size:1.2rem}
+.secret input:focus{outline:none;border-color:#ff00ff}
+.secret button{padding:15px 25px;background:linear-gradient(135deg,#ff00ff,#8a2be2);border:none;border-radius:10px;color:#fff;font-weight:900;cursor:pointer;font-size:1.2rem;transition:all .3s}
+.secret button:hover{transform:translateY(-2px);box-shadow:0 5px 20px rgba(255,0,255,.6)}
 .footer{margin-top:60px;padding-top:30px;border-top:1px solid #333;text-align:center;color:#666;font-size:.9rem}
+@media(max-width:768px){.grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 
 <div class="container">
 <div class="title">0.01</div>
-<div class="tagline">あなたの行動遺伝子を解析<br>Beyond Time DNA検査キット</div>
+<div class="tagline">
+あなたの行動遺伝子を解析<br>
+Beyond Time DNA検査キット
+</div>
 
 <div class="grid">
 <div class="card" onclick="go(100)">
@@ -60,7 +66,7 @@ body{font-family:sans-serif;background:#000;color:#fff;min-height:100vh}
 </div>
 
 <div class="secret">
-<input type="text" id="code" placeholder="">
+<input type="text" id="code" placeholder="シークレットコード">
 <button onclick="unlock()">→</button>
 </div>
 
@@ -75,13 +81,14 @@ let unlocked=new Set();
 const params=new URLSearchParams(window.location.search);
 if(params.get('paid')==='true'){
 unlocked.add(parseInt(params.get('plan')));
+alert('🎉 購入ありがとうございます！\n\nDNA検査が解放されました！');
 }
 
 function go(price){
 if(!unlocked.has(price)&&!unlocked.has(0)){
 window.location.href='payment.html?plan='+price;
 }else{
-alert('検査開始！（デモなので実際の検査画面は省略）');
+alert('🧬 DNA検査開始！\n\n（デモ版のため、実際の検査画面は省略されています）');
 }
 }
 
@@ -90,10 +97,12 @@ const c=document.getElementById('code').value;
 if(c==='0.01'){
 unlocked.add(0);
 alert('🎉 全DNA検査解放！\n\n¥100、¥980、¥2,980、¥29,800\n全ての検査が使えます！');
+document.getElementById('code').value='';
+}else if(c){
+alert('❌ コードが違います');
 }
 }
 </script>
 
 </body>
 </html>
-
